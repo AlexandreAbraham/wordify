@@ -1,0 +1,70 @@
+\RequirePackage{ifthen}
+\RequirePackage{color}
+
+\definecolor{@titletextcolor}{rgb}{0.09,0.21,0.36}
+\definecolor{@titleunderlinecolor}{rgb}{0.31,0.51,0.74}
+\definecolor{@subtitletextcolor}{rgb}{0.31,0.51,0.74}
+
+\definecolor{@sectiontextcolor}{rgb}{0.21,0.37,0.57}
+\definecolor{@subsectiontextcolor}{rgb}{0.31,0.51,0.74}
+\definecolor{@subsubsectiontextcolor}{rgb}{0.45,0.59,0.78}
+
+
+\def\subtitle#1{\def\@subtitle{#1}}
+
+\renewcommand\thesection{\@arabic\c@section.}
+\renewcommand\thesubsection{\@arabic\c@section.\@arabic\c@subsection.}
+\renewcommand\thesubsubsection{\@arabic\c@section.\@arabic\c@subsection.\@arabic\c@subsubsection.}
+
+\def\@seccntformat#1{\protect\makebox[0pt][r]{\@ifundefined{#1@cntformat}%
+{\csname the#1\endcsname\quad}%
+{\csname #1@cntformat\endcsname}}}
+
+\def\section@cntformat{\thesection\quad}
+\def\subsection@cntformat{\thesubsection\quad}
+\def\subsubsection@cntformat{\thesubsubsection\quad}
+
+\renewcommand\section{\@startsection{section}{1}{\z@}% {1} indique le niveau dans la table des matieres
+% {\z@} indique le niveau d'indentation (zéro)
+{-3.5ex \@plus -1ex \@minus -.2ex}% définit l'espace ajouté au dessus du titre
+{2.3ex \@plus .2ex}% définit l'espace en dessous du titre
+{\reset@font \Large \sffamily \bfseries \color{@sectiontextcolor}}} % mise en forme
+
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+{-3.5ex \@plus -1ex \@minus -.2ex}%
+{2.3ex \@plus .2ex}%
+{\reset@font \large \sffamily \bfseries \color{@subsectiontextcolor}}}
+
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+{-3.5ex \@plus -1ex \@minus -.2ex}%
+{2.3ex \@plus .2ex}%
+{\reset@font \large \sffamily \bfseries \color{@subsubsectiontextcolor}}}
+  
+\renewcommand{\sfdefault}{phv}
+\renewcommand{\familydefault}{\sfdefault}  
+
+\def\@maketitle{%
+  \fontfamily{phv}\selectfont
+  \newpage
+  \null
+  %\vskip 2em%
+  \begin{center}%
+  \let \footnote \thanks
+    {\huge \color{@titletextcolor} \textbf \@title \par}%
+    \vskip 0.3em%
+	{\color{@titleunderlinecolor} \hrule \hrule \hrule}%
+	\ifdefined\@subtitle%
+    \vskip 1.0em%
+    {\color{@subtitletextcolor} \textit \@subtitle \par}%
+    \fi%
+    \vskip 1.5em%
+    {\large\bfseries
+      \lineskip .5em%
+      \begin{tabular}[t]{c}%
+        \@author
+      \end{tabular}\par}%
+    \vskip 1em%
+    {\large \@date}%
+  \end{center}%
+  \par
+  \vskip 1.5em}
